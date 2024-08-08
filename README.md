@@ -1,1 +1,2 @@
 # odin-todo_list
+The Odin Project's Todo List project. This project requires you to combine all your knowledge on JaveScript, dynamically created content, factories, constructors/classes, webpack, modules, JSON and more to create a fully functional and expandable Todo List app.
