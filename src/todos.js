@@ -4,7 +4,7 @@ export default class Todos {
     }
 
     setTodoList(todoList) {
-        this.todoList = todoList;
+        this.todoList.push(todoList);
     }
     getTodoList() {
         return this.todoList;
