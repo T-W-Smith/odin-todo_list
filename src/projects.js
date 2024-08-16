@@ -12,7 +12,7 @@ export default class Projects {
     }
 
     setTasks(tasks) {
-        this.tasks = tasks;
+        this.tasks.push(tasks);
     }
     getTasks() {
         return this.tasks;
