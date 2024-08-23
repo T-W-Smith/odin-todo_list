@@ -12,9 +12,25 @@ todoList.setTodoList(generalProject);
 const generalDiv = document.createElement('button');
 generalDiv.textContent = (generalProject.getName());
 document.getElementById("projectList").appendChild(generalDiv);
+const projectDiv = document.createElement('div');
+projectDiv.setAttribute('id', currentProject);
+document.getElementById('taskList').appendChild(projectDiv);
 generalDiv.addEventListener('click', function() {
-    document.getElementById("taskList").innerHTML = '';
-    currentProject = todoList.getTodoList().findIndex(x => x.name === "General");
+    currentProject = todoList.getTodoList().findIndex(x => x.name === generalDiv.textContent);
+    for (let i = 0; i < document.getElementById('taskList').childElementCount; i++) {
+        document.getElementById(i).style.display = 'none';
+        document.getElementById(currentProject).style.display = '';
+    }
+    // document.getElementById("taskList").innerHTML = '';
+    // currentProject = todoList.getTodoList().findIndex(x => x.name === "General");
+    // for (let i = 0; i < generalProject.getTasks().length; i++) {
+    //     const taskDiv = document.createElement('div');
+    //     taskDiv.textContent = (generalProject.getTasks()[i].getName());
+    //     const checkBox = document.createElement('input');
+    //     checkBox.type = "checkbox";
+    //     taskDiv.appendChild(checkBox);
+    //     document.getElementById("taskList").appendChild(taskDiv);
+    // }
 });
 
 const task = function() {
@@ -22,11 +38,17 @@ const task = function() {
     taskBtn.addEventListener('click', newTask);
 
     function newTask() {
-        const newTask = new Tasks(prompt("task name"), "n/a", "n/a", "n/a", "n/a", "today");
+        const newTask = new Tasks(prompt("task name"), "n/a", "n/a", "n/a", "n/a", "today", false);
         todoList.getTodoList()[currentProject].setTasks(newTask);
         const taskDiv = document.createElement('div');
         taskDiv.textContent = (newTask.getName());
-        document.getElementById("taskList").appendChild(taskDiv);
+        const checkBox = document.createElement('input');
+        checkBox.type = "checkbox";
+        checkBox.addEventListener('change', function() {
+            newTask.setChecked(!newTask.getChecked());
+        });
+        taskDiv.appendChild(checkBox);
+        document.getElementById(currentProject).appendChild(taskDiv);
     }
 }();
 
@@ -37,17 +59,29 @@ const project = function() {
     function newProject() {
         const newProject = new Projects(prompt("project name"));
         todoList.setTodoList(newProject);
-        const projectDiv = document.createElement('button');
-        projectDiv.textContent = (newProject.getName());
-        document.getElementById("projectList").appendChild(projectDiv);
-        projectDiv.addEventListener('click', function() {
-            document.getElementById("taskList").innerHTML = '';
-            currentProject = todoList.getTodoList().findIndex(x => x.name === newProject.getName());
-            for (let i = 0; i < newProject.getTasks().length; i++) {
-                const taskDiv = document.createElement('div');
-                taskDiv.textContent = (newProject.getTasks()[i].getName());
-                document.getElementById("taskList").appendChild(taskDiv);
+        const projectButton = document.createElement('button');
+        projectButton.textContent = (newProject.getName());
+        document.getElementById("projectList").appendChild(projectButton);
+        const projectDiv = document.createElement('div');
+        currentProject = todoList.getTodoList().findIndex(x => x.name === newProject.getName());
+        projectDiv.setAttribute('id', currentProject);
+        document.getElementById('taskList').appendChild(projectDiv);
+        projectButton.addEventListener('click', function() {
+            currentProject = todoList.getTodoList().findIndex(x => x.name === projectButton.textContent);
+            for (let i = 0; i < document.getElementById('taskList').childElementCount; i++) {
+                document.getElementById(i).style.display = 'none';
+                document.getElementById(currentProject).style.display = '';
             }
+            // document.getElementById("taskList").innerHTML = '';
+            // currentProject = todoList.getTodoList().findIndex(x => x.name === newProject.getName());
+            // for (let i = 0; i < newProject.getTasks().length; i++) {
+            //     const taskDiv = document.createElement('div');
+            //     taskDiv.textContent = (newProject.getTasks()[i].getName());
+            //     const checkBox = document.createElement('input');
+            //     checkBox.type = "checkbox";
+            //     taskDiv.appendChild(checkBox);
+            //     document.getElementById("taskList").appendChild(taskDiv);
+            // }
         });
     }
 }();

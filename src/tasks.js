@@ -1,11 +1,12 @@
 export default class Tasks {
-    constructor(name, description, priority, notes, dueDate, createtionDate) {
+    constructor(name, description, priority, notes, dueDate, createtionDate, checked) {
         this.name = name;
         this.description = description;
         this.priority = priority;
         this.notes = notes;
         this.dueDate = dueDate;
         this.createtionDate = createtionDate;
+        this.checked = checked;
     }
 
     setName(name) {
@@ -48,5 +49,12 @@ export default class Tasks {
     }
     getCreationDate() {
         return this.createtionDate;
+    }
+
+    setChecked(checked) {
+        this.checked = checked;
+    }
+    getChecked() {
+        return this.checked;
     }
 }
