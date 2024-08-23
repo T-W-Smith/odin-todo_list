@@ -15,6 +15,7 @@ document.getElementById("currentProject").textContent = generalProject.getName()
 document.getElementById("projectList").appendChild(generalDiv);
 const projectDiv = document.createElement('div');
 projectDiv.setAttribute('id', currentProject);
+projectDiv.setAttribute('class', "projectDivContainer");
 document.getElementById('taskList').appendChild(projectDiv);
 generalDiv.addEventListener('click', function() {
     document.getElementById("currentProject").textContent = generalProject.getName();
@@ -30,21 +31,26 @@ const task = function() {
     taskBtn.addEventListener('click', newTask);
 
     function newTask() {
-        const newTask = new Tasks(prompt("task name"), "n/a", "n/a", "n/a", "n/a", "today", false);
+        const newTask = new Tasks(prompt("task name"), prompt("description"), "n/a", "today", false);
         todoList.getTodoList()[currentProject].setTasks(newTask);
         const taskDiv = document.createElement('div');
-        taskDiv.style.margin = "5px";
-        taskDiv.style.display = "flex";
-        const taskName = document.createElement('p');
-        taskName.textContent = (newTask.getName());
-        taskName.style.paddingLeft = "5px";
+        taskDiv.setAttribute('class', "taskDivContainer");
+        const firstRowDiv = document.createElement('div');
+        firstRowDiv.setAttribute('id', "firstRow");
         const checkBox = document.createElement('input');
         checkBox.type = "checkbox";
         checkBox.addEventListener('change', function() {
             newTask.setChecked(!newTask.getChecked());
         });
-        taskDiv.appendChild(checkBox);
-        taskDiv.appendChild(taskName);
+        checkBox.setAttribute('id', "firstRow")
+        const taskName = document.createElement('p');
+        taskName.textContent = newTask.getName();
+        const taskDescription = document.createElement('p');
+        taskDescription.textContent = newTask.getDescription();
+        firstRowDiv.appendChild(checkBox);
+        firstRowDiv.appendChild(taskName);
+        taskDiv.appendChild(firstRowDiv);
+        taskDiv.appendChild(taskDescription);
         document.getElementById(currentProject).appendChild(taskDiv);
     }
 }();

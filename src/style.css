@@ -104,6 +104,19 @@
     color: white;
 }
 
+.main .mainArea #taskList .taskDivContainer {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+    gap: 5px;
+    border-bottom: 3px solid #3f3f3f;
+}
+
+.main .mainArea #taskList .taskDivContainer #firstRow {
+    display: flex;
+    gap: 5px;
+}
+
 /* Footer */
 .footer {
     grid-column: 1 / 3;

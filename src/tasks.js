@@ -1,9 +1,7 @@
 export default class Tasks {
-    constructor(name, description, priority, notes, dueDate, createtionDate, checked) {
+    constructor(name, description, dueDate, createtionDate, checked) {
         this.name = name;
         this.description = description;
-        this.priority = priority;
-        this.notes = notes;
         this.dueDate = dueDate;
         this.createtionDate = createtionDate;
         this.checked = checked;
@@ -21,20 +19,6 @@ export default class Tasks {
     }
     getDescription() {
         return this.description;
-    }
-
-    setPriority(priority) {
-        this.priority = priority;
-    }
-    getPriority() {
-        return this.priority;
-    }
-
-    setNotes(notes) {
-        this.notes = notes;
-    }
-    getNotes() {
-        return this.notes;
     }
 
     setDueDate(dueDate) {
