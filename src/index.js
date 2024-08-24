@@ -3,6 +3,7 @@ import './style.css';
 import Projects from './projects';
 import Tasks from './tasks';
 import Todos from './todos';
+import {taskDom, projectDom, tempCurrentProject} from './ui';
 
 let currentProject = 0;
 const todoList = new Todos();
@@ -29,40 +30,20 @@ generalDiv.addEventListener('click', function() {
 const task = function() {
     const taskBtn = document.getElementById("taskBtn");
     taskBtn.addEventListener('click', newTask);
-
     function newTask() {
-        const newTask = new Tasks(prompt("task name"), prompt("description"), "n/a", "today", false);
+        const newTask = new Tasks(prompt("task name"), prompt("description"), "n/a", false);
         if (newTask.getName() === ''){
             alert("Error: task name is empty");
             return;
         }
         todoList.getTodoList()[currentProject].setTasks(newTask);
-        const taskDiv = document.createElement('div');
-        taskDiv.setAttribute('class', "taskDivContainer");
-        const firstRowDiv = document.createElement('div');
-        firstRowDiv.setAttribute('id', "firstRow");
-        const checkBox = document.createElement('input');
-        checkBox.type = "checkbox";
-        checkBox.addEventListener('change', function() {
-            newTask.setChecked(!newTask.getChecked());
-        });
-        checkBox.setAttribute('id', "firstRow")
-        const taskName = document.createElement('p');
-        taskName.textContent = newTask.getName();
-        const taskDescription = document.createElement('p');
-        taskDescription.textContent = newTask.getDescription();
-        firstRowDiv.appendChild(checkBox);
-        firstRowDiv.appendChild(taskName);
-        taskDiv.appendChild(firstRowDiv);
-        taskDiv.appendChild(taskDescription);
-        document.getElementById(currentProject).appendChild(taskDiv);
+        taskDom(newTask, currentProject);
     }
 }();
 
 const project = function() {
     const projectBtn = document.getElementById("projectBtn");
     projectBtn.addEventListener('click', newProject);
-
     function newProject() {
         const newProject = new Projects(prompt("Project name?"));
         if (newProject.getName() === ''){
@@ -70,16 +51,11 @@ const project = function() {
             return;
         }
         todoList.setTodoList(newProject);
-        const projectButton = document.createElement('button');
-        projectButton.textContent = (newProject.getName());
-        document.getElementById("projectList").appendChild(projectButton);
-        const projectDiv = document.createElement('div');
         currentProject = todoList.getTodoList().findIndex(x => x.name === newProject.getName());
-        projectDiv.setAttribute('id', currentProject);
-        document.getElementById('taskList').appendChild(projectDiv);
-        projectButton.addEventListener('click', function() {
+        projectDom(newProject, currentProject);
+        document.getElementById("projectsButton").addEventListener('click', function() {
             document.getElementById("currentProject").textContent = newProject.getName();
-            currentProject = todoList.getTodoList().findIndex(x => x.name === projectButton.textContent);
+            currentProject = todoList.getTodoList().findIndex(x => x.name === newProject.getName());
             for (let i = 0; i < document.getElementById('taskList').childElementCount; i++) {
                 document.getElementById(i).style.display = 'none';
                 document.getElementById(currentProject).style.display = '';
