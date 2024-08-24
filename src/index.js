@@ -32,6 +32,10 @@ const task = function() {
 
     function newTask() {
         const newTask = new Tasks(prompt("task name"), prompt("description"), "n/a", "today", false);
+        if (newTask.getName() === ''){
+            alert("Error: task name is empty");
+            return;
+        }
         todoList.getTodoList()[currentProject].setTasks(newTask);
         const taskDiv = document.createElement('div');
         taskDiv.setAttribute('class', "taskDivContainer");
@@ -60,7 +64,11 @@ const project = function() {
     projectBtn.addEventListener('click', newProject);
 
     function newProject() {
-        const newProject = new Projects(prompt("project name"));
+        const newProject = new Projects(prompt("Project name?"));
+        if (newProject.getName() === ''){
+            alert("Error: project name is empty");
+            return;
+        }
         todoList.setTodoList(newProject);
         const projectButton = document.createElement('button');
         projectButton.textContent = (newProject.getName());
