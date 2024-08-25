@@ -3,29 +3,19 @@ import './style.css';
 import Projects from './projects';
 import Tasks from './tasks';
 import Todos from './todos';
-import {taskDom, projectDom, tempCurrentProject} from './ui';
+import {taskDom, projectDom} from './ui';
 
 let currentProject = 0;
 const todoList = new Todos();
 
-const generalProject = new Projects("General");
-todoList.setTodoList(generalProject);
-const generalDiv = document.createElement('button');
-generalDiv.textContent = (generalProject.getName());
-document.getElementById("currentProject").textContent = generalProject.getName();
-document.getElementById("projectList").appendChild(generalDiv);
-const projectDiv = document.createElement('div');
-projectDiv.setAttribute('id', currentProject);
-projectDiv.setAttribute('class', "projectDivContainer");
-document.getElementById('taskList').appendChild(projectDiv);
-generalDiv.addEventListener('click', function() {
-    document.getElementById("currentProject").textContent = generalProject.getName();
-    currentProject = todoList.getTodoList().findIndex(x => x.name === generalDiv.textContent);
-    for (let i = 0; i < document.getElementById('taskList').childElementCount; i++) {
-        document.getElementById(i).style.display = 'none';
-        document.getElementById(currentProject).style.display = '';
-    }
-});
+function setUp() {
+    const generalProject = new Projects("General");
+    todoList.setTodoList(generalProject);
+    projectDom(generalProject, 0); 
+    updateCurrentProject(generalProject);
+}
+
+setUp();
 
 const task = function() {
     const taskBtn = document.getElementById("taskBtn");
@@ -53,13 +43,12 @@ const project = function() {
         todoList.setTodoList(newProject);
         currentProject = todoList.getTodoList().findIndex(x => x.name === newProject.getName());
         projectDom(newProject, currentProject);
-        document.getElementById("projectsButton").addEventListener('click', function() {
-            document.getElementById("currentProject").textContent = newProject.getName();
-            currentProject = todoList.getTodoList().findIndex(x => x.name === newProject.getName());
-            for (let i = 0; i < document.getElementById('taskList').childElementCount; i++) {
-                document.getElementById(i).style.display = 'none';
-                document.getElementById(currentProject).style.display = '';
-            }
-        });
+        updateCurrentProject(newProject);
     }
 }();
+
+function updateCurrentProject(project) {
+    document.getElementById("projectsButton" + currentProject).addEventListener('click', function() {
+        currentProject = todoList.getTodoList().findIndex(x => x.name === project.getName());
+    });
+}

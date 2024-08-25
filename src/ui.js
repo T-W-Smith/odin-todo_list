@@ -1,5 +1,3 @@
-export let tempCurrentProject;
-
 export function taskDom(newTask, currentProject) {
     const taskDiv = document.createElement('div');
     taskDiv.setAttribute('class', "taskDivContainer");
@@ -25,9 +23,23 @@ export function taskDom(newTask, currentProject) {
 export function projectDom(newProject, currentProject) {
     const projectButton = document.createElement('button');
     projectButton.textContent = newProject.getName();
-    projectButton.setAttribute('id', "projectsButton");
+    projectButton.setAttribute('id', "projectsButton" + currentProject);
     document.getElementById("projectList").appendChild(projectButton);
     const projectDiv = document.createElement('div');
     projectDiv.setAttribute('id', currentProject);
     document.getElementById('taskList').appendChild(projectDiv);
+    swapProjects(newProject, currentProject);
+    projectButton.addEventListener('click', function() {
+        swapProjects(newProject, currentProject);
+    });
+}
+
+function swapProjects(newProject, currentProject) {
+    document.getElementById("currentProject").textContent = newProject.getName();
+    if(document.getElementById('taskList').childElementCount > 1) {
+        for (let i = 0; i < document.getElementById('taskList').childElementCount; i++) {
+            document.getElementById(i).style.display = 'none';
+            document.getElementById(currentProject).style.display = '';
+        }
+    }
 }
