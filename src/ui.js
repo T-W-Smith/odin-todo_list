@@ -13,10 +13,13 @@ export function taskDom(newTask, currentProject) {
     taskName.textContent = newTask.getName();
     const taskDescription = document.createElement('p');
     taskDescription.textContent = newTask.getDescription();
+    const taskDueDate = document.createElement('p');
+    taskDueDate.textContent = "Due: " + newTask.getDueDate();
     firstRowDiv.appendChild(checkBox);
     firstRowDiv.appendChild(taskName);
     taskDiv.appendChild(firstRowDiv);
     taskDiv.appendChild(taskDescription);
+    taskDiv.appendChild(taskDueDate);
     document.getElementById(currentProject).appendChild(taskDiv);
 }
 
@@ -40,6 +43,8 @@ function swapProjects(newProject, currentProject) {
         for (let i = 0; i < document.getElementById('taskList').childElementCount; i++) {
             document.getElementById(i).style.display = 'none';
             document.getElementById(currentProject).style.display = '';
+            document.getElementById("projectsButton" + i).style.border = '';
+            document.getElementById("projectsButton" + currentProject).style.border = '2px solid black';
         }
     }
 }

@@ -108,7 +108,8 @@
     display: flex;
     flex-direction: column;
     margin: 5px;
-    gap: 5px;
+    gap: 10px;
+    padding-bottom: 20px;
     border-bottom: 3px solid #3f3f3f;
 }
 

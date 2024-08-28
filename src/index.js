@@ -21,7 +21,17 @@ const task = function() {
     const taskBtn = document.getElementById("taskBtn");
     taskBtn.addEventListener('click', newTask);
     function newTask() {
-        const newTask = new Tasks(prompt("task name"), prompt("description"), "n/a", false);
+        const monthNames = [ "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December" ];
+        function myFunction() {
+            const today = new Date();
+            const date = prompt("Please enter date.", today.getDate()+"-"+monthNames[today.getMonth()]+"-"+today.getFullYear());
+        
+            if (date != null) {
+                return date;
+            }
+        }
+        const newTask = new Tasks(prompt("task name"), prompt("description"), myFunction(), false);
         if (newTask.getName() === ''){
             alert("Error: task name is empty");
             return;
