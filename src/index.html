@@ -27,5 +27,49 @@
                 <a href="https://github.com/T-W-Smith">Trey Smith 2024</a>
             </footer>
         </div>
+
+        <div class="projectModal">
+            <dialog id="projectDialog">
+                <form id="projectForm" method="dialog">
+                    <h1>New Project: </h1>
+                    <div id="textbox">
+                        <label for="projectName">Project Name: </label>
+                        <input type="text" id="projectName" name="projectName" required>
+                    </div>
+                    <div id="submit">
+                        <input type="submit" id="submit" value="Submit">
+                    </div>
+                    <div id="cancel">
+                        <input type="button" id="cancelBtn" value="Cancel">
+                    </div>
+                </form>
+            </dialog>
+        </div>
+
+        <div class="taskModal">
+            <dialog id="taskDialog">
+                <form id="taskForm" method="dialog">
+                    <h1>New Task: </h1>
+                    <div id="textbox">
+                        <label for="taskName">Task Name: </label>
+                        <input type="text" id="taskName" name="taskName" required>
+                    </div>
+                    <div id="textbox">
+                        <label for="taskDesc">Task Description: </label>
+                        <textarea id="taskDesc" name="taskDesc"></textarea>
+                    </div>
+                    <div id="datebox">
+                        <label for="taskDueDate">Task Due Date: </label>
+                        <input type="date" id="taskDueDate" name="taskDueDate" required>
+                    </div>
+                    <div id="submit">
+                        <input type="submit" id="submit" value="Submit">
+                    </div>
+                    <div id="cancel">
+                        <input type="button" id="cancelBtn" value="Cancel">
+                    </div>
+                </form>
+            </dialog>
+        </div>
     </body>
 </html>

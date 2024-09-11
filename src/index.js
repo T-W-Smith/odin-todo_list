@@ -19,42 +19,34 @@ setUp();
 
 const task = function() {
     const taskBtn = document.getElementById("taskBtn");
-    taskBtn.addEventListener('click', newTask);
-    function newTask() {
-        const monthNames = [ "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December" ];
-        function myFunction() {
-            const today = new Date();
-            const date = prompt("Please enter date.", today.getDate()+"-"+monthNames[today.getMonth()]+"-"+today.getFullYear());
-        
-            if (date != null) {
-                return date;
-            }
-        }
-        const newTask = new Tasks(prompt("task name"), prompt("description"), myFunction(), false);
-        if (newTask.getName() === ''){
-            alert("Error: task name is empty");
-            return;
-        }
+    taskBtn.addEventListener('click', function () {
+       document.getElementById("taskDialog").showModal();
+    });
+
+    document.getElementById('taskForm').addEventListener("submit", (e) => {
+        e.preventDefault();
+        const newTask = new Tasks(document.getElementById("taskName").value, document.getElementById("taskDesc").value, document.getElementById("taskDueDate").value, false);
         todoList.getTodoList()[currentProject].setTasks(newTask);
         taskDom(newTask, currentProject);
-    }
+        document.getElementById("taskDialog").close();
+    });
 }();
 
 const project = function() {
     const projectBtn = document.getElementById("projectBtn");
-    projectBtn.addEventListener('click', newProject);
-    function newProject() {
-        const newProject = new Projects(prompt("Project name?"));
-        if (newProject.getName() === ''){
-            alert("Error: project name is empty");
-            return;
-        }
+    projectBtn.addEventListener('click', function () {
+        document.getElementById("projectDialog").showModal();
+    });
+
+    document.getElementById('projectForm').addEventListener("submit", (e) => {
+        e.preventDefault();
+        const newProject = new Projects(document.getElementById("projectName").value);
         todoList.setTodoList(newProject);
         currentProject = todoList.getTodoList().findIndex(x => x.name === newProject.getName());
         projectDom(newProject, currentProject);
         updateCurrentProject(newProject);
-    }
+        document.getElementById("projectDialog").close();
+    });
 }();
 
 function updateCurrentProject(project) {
