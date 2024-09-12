@@ -23,13 +23,24 @@ const task = function() {
        document.getElementById("taskDialog").showModal();
     });
 
-    document.getElementById('taskForm').addEventListener("submit", (e) => {
+    document.getElementById('taskForm').addEventListener('submit', (e) => {
         e.preventDefault();
         const newTask = new Tasks(document.getElementById("taskName").value, document.getElementById("taskDesc").value, document.getElementById("taskDueDate").value, false);
         todoList.getTodoList()[currentProject].setTasks(newTask);
         taskDom(newTask, currentProject);
-        document.getElementById("taskDialog").close();
+        closeNewTask();
     });
+
+    document.getElementById('taskCancelBtn').addEventListener('click', function() {
+        closeNewTask();
+    });
+
+    function closeNewTask() {
+        document.getElementById("taskDialog").close();
+        document.getElementById("taskName").value = "";
+        document.getElementById("taskDesc").value = "";
+        document.getElementById("taskDueDate").value = "";
+    }
 }();
 
 const project = function() {
@@ -38,15 +49,24 @@ const project = function() {
         document.getElementById("projectDialog").showModal();
     });
 
-    document.getElementById('projectForm').addEventListener("submit", (e) => {
+    document.getElementById('projectForm').addEventListener('submit', (e) => {
         e.preventDefault();
         const newProject = new Projects(document.getElementById("projectName").value);
         todoList.setTodoList(newProject);
         currentProject = todoList.getTodoList().findIndex(x => x.name === newProject.getName());
         projectDom(newProject, currentProject);
         updateCurrentProject(newProject);
-        document.getElementById("projectDialog").close();
+        closeNewProject();
     });
+
+    document.getElementById('projectCancelBtn').addEventListener('click', function() {
+        closeNewProject();
+    });
+
+    function closeNewProject() {
+        document.getElementById("projectDialog").close();
+        document.getElementById("projectName").value = "";
+    }
 }();
 
 function updateCurrentProject(project) {

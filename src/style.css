@@ -205,9 +205,14 @@ textarea {
     padding: 5px;
 }
 
-input[type=submit], #cancelBtn {
+input[type=submit], #projectCancelBtn, #taskCancelBtn {
     border: none;
-    border-radius: 10px;
+    border-radius: 5px;
     width: 75px;
     height: 50px;
+}
+
+input[type=submit]:hover, #projectCancelBtn:hover, #taskCancelBtn:hover {
+    background-color: #acaaaa;
+    color: black;
 }
