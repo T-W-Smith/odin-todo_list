@@ -24,16 +24,28 @@ export function taskDom(newTask, currentProject) {
 }
 
 export function projectDom(newProject, currentProject) {
+    const projectBtnDiv = document.createElement('div');
+    projectBtnDiv.setAttribute('id', "projectBtnDiv" + currentProject);
+    projectBtnDiv.setAttribute('class', "projectBtnDiv");
     const projectButton = document.createElement('button');
     projectButton.textContent = newProject.getName();
     projectButton.setAttribute('id', "projectsButton" + currentProject);
-    document.getElementById("projectList").appendChild(projectButton);
+    projectButton.setAttribute('class', "projectsButton");
+    const deleteProjectBtn = document.createElement('button');
+    deleteProjectBtn.textContent = "X";
+    deleteProjectBtn.setAttribute('id', "deleteProjectBtn");
+    projectBtnDiv.appendChild(projectButton);
+    projectBtnDiv.appendChild(deleteProjectBtn);
+    document.getElementById("projectList").appendChild(projectBtnDiv);
     const projectDiv = document.createElement('div');
     projectDiv.setAttribute('id', currentProject);
     document.getElementById('taskList').appendChild(projectDiv);
     swapProjects(newProject, currentProject);
     projectButton.addEventListener('click', function() {
         swapProjects(newProject, currentProject);
+    });
+    deleteProjectBtn.addEventListener('click', function() {
+        console.log("DELETE");
     });
 }
 
@@ -43,8 +55,15 @@ function swapProjects(newProject, currentProject) {
         for (let i = 0; i < document.getElementById('taskList').childElementCount; i++) {
             document.getElementById(i).style.display = 'none';
             document.getElementById(currentProject).style.display = '';
-            document.getElementById("projectsButton" + i).style.border = '';
-            document.getElementById("projectsButton" + currentProject).style.border = '2px solid black';
+            document.getElementById("projectBtnDiv" + i).style.backgroundColor = '';
+            document.getElementById("projectBtnDiv" + i).style.fontWeight = '';
+            document.getElementById("projectBtnDiv" + currentProject).style.backgroundColor = '#707070';
+            document.getElementById("projectBtnDiv" + currentProject).style.fontWeight = 'bold';
         }
     }
+}
+
+export function setUpGeneral() {
+    document.getElementById("projectBtnDiv" + 0).style.backgroundColor = '#707070';
+    document.getElementById("projectBtnDiv" + 0).style.fontWeight = 'bold';
 }

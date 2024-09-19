@@ -3,7 +3,7 @@ import './style.css';
 import Projects from './projects';
 import Tasks from './tasks';
 import Todos from './todos';
-import {taskDom, projectDom} from './ui';
+import {taskDom, projectDom, setUpGeneral} from './ui';
 
 let currentProject = 0;
 const todoList = new Todos();
@@ -11,7 +11,8 @@ const todoList = new Todos();
 function setUp() {
     const generalProject = new Projects("General");
     todoList.setTodoList(generalProject);
-    projectDom(generalProject, 0); 
+    projectDom(generalProject, 0);
+    setUpGeneral();
     updateCurrentProject(generalProject);
 }
 
