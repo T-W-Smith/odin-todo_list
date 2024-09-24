@@ -13,7 +13,6 @@ function setUp() {
     todoList.setTodoList(generalProject);
     projectDom(generalProject, 0);
     setUpGeneral();
-    document.getElementById("deleteProjectBtn" + 0).remove();
     updateCurrentProject(generalProject);
 }
 

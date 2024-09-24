@@ -51,6 +51,14 @@ export function projectDom(newProject, currentProject) {
     projectButton.textContent = newProject.getName();
     projectButton.setAttribute('id', "projectsButton" + currentProject);
     projectButton.setAttribute('class', "projectsButton");
+
+    projectButton.addEventListener('dblclick', function() {
+        newProject.setName(prompt("New name?"));
+        projectButton.textContent = newProject.getName();
+        if (document.getElementById(currentProject).style.display === '')
+            document.getElementById("currentProject").textContent = newProject.getName();
+    });
+
     const deleteProjectBtn = document.createElement('button');
     deleteProjectBtn.textContent = "X";
     deleteProjectBtn.setAttribute('id', "deleteProjectBtn" + currentProject);
@@ -84,4 +92,5 @@ function swapProjects(newProject, currentProject) {
 export function setUpGeneral() {
     document.getElementById("projectBtnDiv" + 0).style.backgroundColor = '#707070';
     document.getElementById("projectBtnDiv" + 0).style.fontWeight = 'bold';
+    document.getElementById("deleteProjectBtn" + 0).remove();
 }
