@@ -13,6 +13,7 @@ function setUp() {
     todoList.setTodoList(generalProject);
     projectDom(generalProject, 0);
     setUpGeneral();
+    document.getElementById("deleteProjectBtn" + 0).remove();
     updateCurrentProject(generalProject);
 }
 
@@ -58,6 +59,9 @@ const project = function() {
         projectDom(newProject, currentProject);
         updateCurrentProject(newProject);
         closeNewProject();
+        document.getElementById('deleteProjectBtn' + currentProject).addEventListener('click', function() {
+            console.log("DELETE");
+        });
     });
 
     document.getElementById('projectCancelBtn').addEventListener('click', function() {

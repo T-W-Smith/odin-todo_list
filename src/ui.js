@@ -9,18 +9,38 @@ export function taskDom(newTask, currentProject) {
         newTask.setChecked(!newTask.getChecked());
     });
     checkBox.setAttribute('id', "firstRow")
-    const taskName = document.createElement('p');
+    const taskName = document.createElement('button');
+    taskName.setAttribute('id', "taskNameBtn");
     taskName.textContent = newTask.getName();
+    taskName.addEventListener('click', function() {
+        if (taskDescription.style.display === 'none') {
+            taskDescription.style.display = '';
+            taskDueDate.style.display = '';
+        }
+        else {
+            taskDescription.style.display = 'none';
+            taskDueDate.style.display = 'none';
+        }
+    });
     const taskDescription = document.createElement('p');
     taskDescription.textContent = newTask.getDescription();
     const taskDueDate = document.createElement('p');
     taskDueDate.textContent = "Due: " + newTask.getDueDate();
+    const deleteTaskBtn = document.createElement('button');
+    deleteTaskBtn.setAttribute('id', "deleteTaskBtn");
+    deleteTaskBtn.textContent = "X";
+    deleteTaskBtn.addEventListener('click', function() {
+        console.log("DELETE TASK");
+    });
     firstRowDiv.appendChild(checkBox);
     firstRowDiv.appendChild(taskName);
+    firstRowDiv.appendChild(deleteTaskBtn);
     taskDiv.appendChild(firstRowDiv);
     taskDiv.appendChild(taskDescription);
     taskDiv.appendChild(taskDueDate);
     document.getElementById(currentProject).appendChild(taskDiv);
+    taskDescription.style.display = 'none';
+    taskDueDate.style.display = 'none';
 }
 
 export function projectDom(newProject, currentProject) {
@@ -33,7 +53,8 @@ export function projectDom(newProject, currentProject) {
     projectButton.setAttribute('class', "projectsButton");
     const deleteProjectBtn = document.createElement('button');
     deleteProjectBtn.textContent = "X";
-    deleteProjectBtn.setAttribute('id', "deleteProjectBtn");
+    deleteProjectBtn.setAttribute('id', "deleteProjectBtn" + currentProject);
+    deleteProjectBtn.setAttribute('class', "deleteProjectBtn");
     projectBtnDiv.appendChild(projectButton);
     projectBtnDiv.appendChild(deleteProjectBtn);
     document.getElementById("projectList").appendChild(projectBtnDiv);
@@ -43,9 +64,6 @@ export function projectDom(newProject, currentProject) {
     swapProjects(newProject, currentProject);
     projectButton.addEventListener('click', function() {
         swapProjects(newProject, currentProject);
-    });
-    deleteProjectBtn.addEventListener('click', function() {
-        console.log("DELETE");
     });
 }
 
