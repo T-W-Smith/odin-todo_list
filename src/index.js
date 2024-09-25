@@ -45,6 +45,7 @@ const task = function() {
 }();
 
 const project = function() {
+    let newProject;
     const projectBtn = document.getElementById("projectBtn");
     projectBtn.addEventListener('click', function () {
         document.getElementById("projectDialog").showModal();
@@ -52,7 +53,7 @@ const project = function() {
 
     document.getElementById('projectForm').addEventListener('submit', (e) => {
         e.preventDefault();
-        const newProject = new Projects(document.getElementById("projectName").value);
+        newProject = new Projects(document.getElementById("projectName").value);
         todoList.setTodoList(newProject);
         currentProject = todoList.getTodoList().findIndex(x => x.name === newProject.getName());
         projectDom(newProject, currentProject);
@@ -71,6 +72,18 @@ const project = function() {
         document.getElementById("projectDialog").close();
         document.getElementById("projectName").value = "";
     }
+
+    document.getElementById('renameProjectForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        newProject.setName(document.getElementById("renameProjectName").value);
+        document.getElementById("projectsButton" + currentProject).textContent = newProject.getName();
+        document.getElementById("currentProject").textContent = newProject.getName();
+        document.getElementById("renameProjectDialog").close();
+    });
+    
+    document.getElementById('renameProjectCancelBtn').addEventListener('click', function() {
+        document.getElementById("renameProjectDialog").close();
+    });
 }();
 
 function updateCurrentProject(project) {

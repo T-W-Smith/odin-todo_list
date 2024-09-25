@@ -53,10 +53,8 @@ export function projectDom(newProject, currentProject) {
     projectButton.setAttribute('class', "projectsButton");
 
     projectButton.addEventListener('dblclick', function() {
-        newProject.setName(prompt("New name?"));
-        projectButton.textContent = newProject.getName();
-        if (document.getElementById(currentProject).style.display === '')
-            document.getElementById("currentProject").textContent = newProject.getName();
+        document.getElementById("renameProjectDialog").showModal();
+        document.getElementById("renameProjectName").value = newProject.getName();
     });
 
     const deleteProjectBtn = document.createElement('button');
