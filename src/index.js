@@ -4,6 +4,7 @@ import Projects from './projects';
 import Tasks from './tasks';
 import Todos from './todos';
 import {taskDom, projectDom, setUpGeneral} from './ui';
+import {saveTodos, saveProjects, saveTasks} from './storage';
 
 let currentProject = 0;
 const todoList = new Todos();
@@ -14,6 +15,9 @@ function setUp() {
     projectDom(generalProject, 0);
     setUpGeneral();
     updateCurrentProject(generalProject);
+
+    saveTodos(todoList);
+    saveProjects(generalProject, currentProject);
 }
 
 setUp();
@@ -28,8 +32,11 @@ const task = function() {
         e.preventDefault();
         const newTask = new Tasks(document.getElementById("taskName").value, document.getElementById("taskDesc").value, document.getElementById("taskDueDate").value, false);
         todoList.getTodoList()[currentProject].setTasks(newTask);
+        todoList.getTodoList()[currentProject].setTasksLength(todoList.getTodoList()[currentProject].getTasks().length);
         taskDom(newTask, currentProject);
         closeNewTask();
+        saveProjects(todoList.getTodoList()[currentProject], currentProject);
+        saveTasks(newTask, todoList.getTodoList()[currentProject].getName(), todoList.getTodoList()[currentProject].getTasksLength());
     });
 
     document.getElementById('taskCancelBtn').addEventListener('click', function() {
@@ -62,6 +69,9 @@ const project = function() {
         document.getElementById('deleteProjectBtn' + currentProject).addEventListener('click', function() {
             console.log("DELETE");
         });
+
+        saveTodos(todoList);
+        saveProjects(newProject, currentProject);
     });
 
     document.getElementById('projectCancelBtn').addEventListener('click', function() {

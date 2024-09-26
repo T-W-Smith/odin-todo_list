@@ -2,6 +2,7 @@ export default class Projects {
     constructor(name) {
         this.name = name;
         this.tasks = [];
+        this.tasksLength;
     }
 
     setName(name) {
@@ -16,5 +17,12 @@ export default class Projects {
     }
     getTasks() {
         return this.tasks;
+    }
+
+    setTasksLength(length) {
+        this.tasksLength = length;
+    }
+    getTasksLength() {
+        return this.tasksLength;
     }
 }
