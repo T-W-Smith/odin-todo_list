@@ -52,10 +52,12 @@ export function projectDom(newProject, currentProject) {
     projectButton.setAttribute('id', "projectsButton" + currentProject);
     projectButton.setAttribute('class', "projectsButton");
 
-    projectButton.addEventListener('dblclick', function() {
-        document.getElementById("renameProjectDialog").showModal();
-        document.getElementById("renameProjectName").value = newProject.getName();
-    });
+    if (projectButton.getAttribute('id') !== "projectsButton" + 0) {
+        projectButton.addEventListener('dblclick', function() {
+            document.getElementById("renameProjectDialog").showModal();
+            document.getElementById("renameProjectName").value = newProject.getName();
+        });
+    }
 
     const deleteProjectBtn = document.createElement('button');
     deleteProjectBtn.textContent = "X";

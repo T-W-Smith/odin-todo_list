@@ -12,15 +12,15 @@ const todoList = new Todos();
 function setUp() {
     const generalProject = new Projects("General");
     todoList.setTodoList(generalProject);
+    todoList.setTotalProjects(currentProject);
     projectDom(generalProject, 0);
     setUpGeneral();
     updateCurrentProject(generalProject);
 
     if (isLocalStorageAvailable()) {
-        console.log("YES");
+
     }
     else {
-        console.log("NO");
         saveTodos(todoList);
         saveProjects(generalProject, currentProject);
     }
@@ -67,8 +67,9 @@ const project = function() {
     document.getElementById('projectForm').addEventListener('submit', (e) => {
         e.preventDefault();
         newProject = new Projects(document.getElementById("projectName").value);
+        currentProject++;
         todoList.setTodoList(newProject);
-        currentProject = todoList.getTodoList().findIndex(x => x.name === newProject.getName());
+        todoList.setTotalProjects(currentProject);
         projectDom(newProject, currentProject);
         updateCurrentProject(newProject);
         closeNewProject();
