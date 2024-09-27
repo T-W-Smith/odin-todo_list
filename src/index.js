@@ -4,7 +4,7 @@ import Projects from './projects';
 import Tasks from './tasks';
 import Todos from './todos';
 import {taskDom, projectDom, setUpGeneral} from './ui';
-import {saveTodos, saveProjects, saveTasks} from './storage';
+import {saveTodos, saveProjects, saveTasks, isLocalStorageAvailable} from './storage';
 
 let currentProject = 0;
 const todoList = new Todos();
@@ -16,8 +16,14 @@ function setUp() {
     setUpGeneral();
     updateCurrentProject(generalProject);
 
-    saveTodos(todoList);
-    saveProjects(generalProject, currentProject);
+    if (isLocalStorageAvailable()) {
+        console.log("YES");
+    }
+    else {
+        console.log("NO");
+        saveTodos(todoList);
+        saveProjects(generalProject, currentProject);
+    }
 }
 
 setUp();

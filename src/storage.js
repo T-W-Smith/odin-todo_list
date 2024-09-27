@@ -12,3 +12,10 @@ export function saveTasks (tasks, project, taskNumber) {
     localStorage.setItem('tasks' + project + taskNumber, JSON.stringify(tasks));
     // console.log(JSON.parse(localStorage.getItem('tasks' + project + taskNumber)));
 }
+
+export function isLocalStorageAvailable() {
+    if (JSON.parse(localStorage.getItem('todoList')) !== null)
+        return true;
+    else
+        return false;
+}
