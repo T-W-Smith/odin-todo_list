@@ -38,11 +38,11 @@ const task = function() {
         e.preventDefault();
         const newTask = new Tasks(document.getElementById("taskName").value, document.getElementById("taskDesc").value, document.getElementById("taskDueDate").value, false);
         todoList.getTodoList()[currentProject].setTasks(newTask);
-        todoList.getTodoList()[currentProject].setTasksLength(todoList.getTodoList()[currentProject].getTasks().length);
+        todoList.getTodoList()[currentProject].setTotalTasks(todoList.getTodoList()[currentProject].getTasks().length);
         taskDom(newTask, currentProject);
         closeNewTask();
         saveProjects(todoList.getTodoList()[currentProject], currentProject);
-        saveTasks(newTask, todoList.getTodoList()[currentProject].getName(), todoList.getTodoList()[currentProject].getTasksLength());
+        saveTasks(newTask, todoList.getTodoList()[currentProject].getName(), todoList.getTodoList()[currentProject].getTotalTasks());
     });
 
     document.getElementById('taskCancelBtn').addEventListener('click', function() {
