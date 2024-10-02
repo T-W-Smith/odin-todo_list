@@ -4,10 +4,27 @@ import Projects from './projects';
 import Tasks from './tasks';
 import Todos from './todos';
 import {taskDom, projectDom, setUpGeneral} from './ui';
-import {saveTodos, saveProjects, saveTasks, isLocalStorageAvailable} from './storage';
+import {saveTodos, saveProjects, saveTasks, isLocalStorageAvailable, loadTodos, loadProjects} from './storage';
 
 let currentProject = 0;
-const todoList = new Todos();
+let todoList = new Todos;
+// localStorage.clear();
+if (isLocalStorageAvailable()) {
+    console.log("LOAD");
+    const storedTodoList = loadTodos().todoList;
+    for (let i = 0; i < storedTodoList.length; i++) {
+        const newProject = new Projects(storedTodoList[i].name)
+        todoList.setTodoList(newProject);
+        projectDom(newProject, i);
+        if (i === 0)   
+            setUpGeneral();
+        updateCurrentProject(newProject);
+    }
+}
+else {
+    console.log("NEW");
+    setUp();
+}
 
 function setUp() {
     const generalProject = new Projects("General");
@@ -17,16 +34,11 @@ function setUp() {
     setUpGeneral();
     updateCurrentProject(generalProject);
 
-    if (isLocalStorageAvailable()) {
-
-    }
-    else {
-        saveTodos(todoList);
-        saveProjects(generalProject, currentProject);
-    }
+    saveTodos(todoList);
+    saveProjects(generalProject, currentProject);
 }
 
-setUp();
+// setUp();
 
 const task = function() {
     const taskBtn = document.getElementById("taskBtn");
@@ -67,7 +79,7 @@ const project = function() {
     document.getElementById('projectForm').addEventListener('submit', (e) => {
         e.preventDefault();
         newProject = new Projects(document.getElementById("projectName").value);
-        currentProject++;
+        currentProject = todoList.getTodoList().length;
         todoList.setTodoList(newProject);
         todoList.setTotalProjects(currentProject);
         projectDom(newProject, currentProject);
