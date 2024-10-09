@@ -4,7 +4,7 @@ import Projects from './projects';
 import Tasks from './tasks';
 import Todos from './todos';
 import {taskDom, projectDom, setUpGeneral} from './ui';
-import {saveTodos, saveProjects, saveTasks, isLocalStorageAvailable, loadTodos, loadProjects} from './storage';
+import {saveTodos, isLocalStorageAvailable, loadTodos} from './storage';
 
 let currentProject = 0;
 let todoList = new Todos;
@@ -13,12 +13,18 @@ if (isLocalStorageAvailable()) {
     console.log("LOAD");
     const storedTodoList = loadTodos().todoList;
     for (let i = 0; i < storedTodoList.length; i++) {
-        const newProject = new Projects(storedTodoList[i].name)
+        const newProject = new Projects(storedTodoList[i].name);
+        currentProject = todoList.getTodoList().length;
         todoList.setTodoList(newProject);
         projectDom(newProject, i);
         if (i === 0)   
             setUpGeneral();
         updateCurrentProject(newProject);
+        for (let j = 0; j < storedTodoList[i].tasks.length; j++) {
+            const newTask = new Tasks(storedTodoList[i].tasks[j].name, storedTodoList[i].tasks[j].description, storedTodoList[i].tasks[j].dueDate, storedTodoList[i].tasks[j].checked);
+            todoList.getTodoList()[i].setTasks(newTask);
+            taskDom(newTask, i);
+        }
     }
 }
 else {
@@ -29,16 +35,12 @@ else {
 function setUp() {
     const generalProject = new Projects("General");
     todoList.setTodoList(generalProject);
-    todoList.setTotalProjects(currentProject);
     projectDom(generalProject, 0);
     setUpGeneral();
     updateCurrentProject(generalProject);
 
     saveTodos(todoList);
-    saveProjects(generalProject, currentProject);
 }
-
-// setUp();
 
 const task = function() {
     const taskBtn = document.getElementById("taskBtn");
@@ -50,11 +52,9 @@ const task = function() {
         e.preventDefault();
         const newTask = new Tasks(document.getElementById("taskName").value, document.getElementById("taskDesc").value, document.getElementById("taskDueDate").value, false);
         todoList.getTodoList()[currentProject].setTasks(newTask);
-        todoList.getTodoList()[currentProject].setTotalTasks(todoList.getTodoList()[currentProject].getTasks().length);
         taskDom(newTask, currentProject);
         closeNewTask();
-        saveProjects(todoList.getTodoList()[currentProject], currentProject);
-        saveTasks(newTask, todoList.getTodoList()[currentProject].getName(), todoList.getTodoList()[currentProject].getTotalTasks());
+        saveTodos(todoList);
     });
 
     document.getElementById('taskCancelBtn').addEventListener('click', function() {
@@ -81,7 +81,6 @@ const project = function() {
         newProject = new Projects(document.getElementById("projectName").value);
         currentProject = todoList.getTodoList().length;
         todoList.setTodoList(newProject);
-        todoList.setTotalProjects(currentProject);
         projectDom(newProject, currentProject);
         updateCurrentProject(newProject);
         closeNewProject();
@@ -90,7 +89,6 @@ const project = function() {
         });
 
         saveTodos(todoList);
-        saveProjects(newProject, currentProject);
     });
 
     document.getElementById('projectCancelBtn').addEventListener('click', function() {
