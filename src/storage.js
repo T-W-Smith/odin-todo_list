@@ -3,6 +3,10 @@ export function saveTodos (todoList) {
     // console.log(JSON.parse(localStorage.getItem('todoList')));
 }
 
+export function loadTodos() {
+    return JSON.parse(localStorage.getItem('todoList'));
+}
+
 export function isLocalStorageAvailable() {
     if (JSON.parse(localStorage.getItem('todoList')) !== null)
         return true;
@@ -10,6 +14,7 @@ export function isLocalStorageAvailable() {
         return false;
 }
 
-export function loadTodos() {
-    return JSON.parse(localStorage.getItem('todoList'));
+export function clearLocalStorage() {
+    localStorage.clear();
+    location.reload();
 }

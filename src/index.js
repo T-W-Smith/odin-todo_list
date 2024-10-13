@@ -4,11 +4,11 @@ import Projects from './projects';
 import Tasks from './tasks';
 import Todos from './todos';
 import {taskDom, projectDom, setUpGeneral} from './ui';
-import {saveTodos, isLocalStorageAvailable, loadTodos} from './storage';
+import {saveTodos, loadTodos, isLocalStorageAvailable, clearLocalStorage} from './storage';
 
 let currentProject = 0;
 let todoList = new Todos;
-// localStorage.clear();
+
 if (isLocalStorageAvailable()) {
     console.log("LOAD");
     const storedTodoList = loadTodos().todoList;
@@ -118,3 +118,9 @@ function updateCurrentProject(project) {
         currentProject = todoList.getTodoList().findIndex(x => x.name === project.getName());
     });
 }
+
+const resetTodoList = function () {
+    document.getElementById("resetBtn").addEventListener('click', function() {
+        clearLocalStorage();
+    });
+}();
