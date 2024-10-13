@@ -26,11 +26,13 @@ if (isLocalStorageAvailable()) {
             taskDom(newTask, i);
         }
     }
+    document.getElementById("projectsButton" + 0).click();
 }
 else {
     console.log("NEW");
     setUp();
 }
+
 
 function setUp() {
     const generalProject = new Projects("General");
