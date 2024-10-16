@@ -1,3 +1,5 @@
+import { deleteProject } from "./index";
+
 export function taskDom(newTask, currentProject) {
     const taskDiv = document.createElement('div');
     taskDiv.setAttribute('class', "taskDivContainer");
@@ -69,20 +71,27 @@ export function projectDom(newProject, currentProject) {
     const projectDiv = document.createElement('div');
     projectDiv.setAttribute('id', currentProject);
     document.getElementById('taskList').appendChild(projectDiv);
+    deleteProjectBtn.addEventListener('click', function() {
+        projectBtnDiv.remove();
+        projectDiv.remove();
+        deleteProject(newProject.getName());
+    });
     swapProjects(newProject, currentProject);
-    projectButton.addEventListener('click', function() {
-        swapProjects(newProject, currentProject);
+    projectButton.addEventListener('click', function(e) {
+        swapProjects(newProject, e.target.id.replace(/^\D+/g, ''));
     });
 }
 
 function swapProjects(newProject, currentProject) {
     document.getElementById("currentProject").textContent = newProject.getName();
-    if(document.getElementById('taskList').childElementCount > 1) {
-        for (let i = 0; i < document.getElementById('taskList').childElementCount; i++) {
-            document.getElementById(i).style.display = 'none';
+    if(document.getElementById("taskList").childElementCount > 1) {
+        let cDiv = document.getElementById('taskList').children;
+        let cDiv2 = document.getElementById('projectList').children;
+        for (let i = 0; i < cDiv.length; i++) {
+            cDiv[i].style.display = 'none';
             document.getElementById(currentProject).style.display = '';
-            document.getElementById("projectBtnDiv" + i).style.backgroundColor = '';
-            document.getElementById("projectBtnDiv" + i).style.fontWeight = '';
+            cDiv2[i].style.backgroundColor = '';
+            cDiv2[i].style.fontWeight = '';
             document.getElementById("projectBtnDiv" + currentProject).style.backgroundColor = '#707070';
             document.getElementById("projectBtnDiv" + currentProject).style.fontWeight = 'bold';
         }

@@ -8,6 +8,13 @@ import {saveTodos, loadTodos, isLocalStorageAvailable, clearLocalStorage} from '
 
 let currentProject = 0;
 let todoList = new Todos;
+  
+document.addEventListener('keydown', (event) => {
+if (event.key === 'Enter') {
+    // Execute code when the Enter key is pressed
+    console.log(todoList.getTodoList());
+    }
+});
 
 if (isLocalStorageAvailable()) {
     console.log("LOAD");
@@ -30,11 +37,11 @@ if (isLocalStorageAvailable()) {
 }
 else {
     console.log("NEW");
-    setUp();
+    initialSetUp();
 }
 
 
-function setUp() {
+function initialSetUp() {
     const generalProject = new Projects("General");
     todoList.setTodoList(generalProject);
     projectDom(generalProject, 0);
@@ -81,14 +88,11 @@ const project = function() {
     document.getElementById('projectForm').addEventListener('submit', (e) => {
         e.preventDefault();
         newProject = new Projects(document.getElementById("projectName").value);
-        currentProject = todoList.getTodoList().length;
         todoList.setTodoList(newProject);
+        currentProject = todoList.getTodoList().length - 1;
         projectDom(newProject, currentProject);
         updateCurrentProject(newProject);
         closeNewProject();
-        document.getElementById('deleteProjectBtn' + currentProject).addEventListener('click', function() {
-            console.log("DELETE");
-        });
 
         saveTodos(todoList);
     });
@@ -126,3 +130,11 @@ const resetTodoList = function () {
         clearLocalStorage();
     });
 }();
+
+export function deleteProject(projectName) {
+    let projectIndex = todoList.getTodoList().findIndex(x => x.name === projectName);
+    todoList.getTodoList().splice(projectIndex, 1);
+    saveTodos(todoList);
+    if (currentProject === projectIndex)
+        document.getElementById("projectsButton" + 0).click();
+}
