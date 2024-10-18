@@ -1,6 +1,5 @@
 export function saveTodos (todoList) {
     localStorage.setItem('todoList', JSON.stringify(todoList));
-    // console.log(JSON.parse(localStorage.getItem('todoList')));
 }
 
 export function loadTodos() {

@@ -1,4 +1,4 @@
-import { deleteProject, deleteTask } from "./index";
+import { deleteProject, deleteTask, save } from "./index";
 
 export function taskDom(newTask, currentProject) {
     const taskDiv = document.createElement('div');
@@ -8,10 +8,12 @@ export function taskDom(newTask, currentProject) {
     firstRowDiv.setAttribute('id', "firstRow");
     const checkBox = document.createElement('input');
     checkBox.type = "checkbox";
+    checkBox.setAttribute('id', "checkBox");
     checkBox.addEventListener('change', function() {
         newTask.setChecked(!newTask.getChecked());
+        save();
     });
-    checkBox.setAttribute('id', "firstRow")
+    checkBox.checked = newTask.getChecked();
     const taskName = document.createElement('button');
     taskName.setAttribute('id', "taskNameBtn");
     taskName.textContent = newTask.getName();
@@ -38,6 +40,7 @@ export function taskDom(newTask, currentProject) {
         let taskListChildren = document.getElementById(currentProject).children;
         for(let i = 0; i < taskListChildren.length; i++) {
             taskListChildren[i].setAttribute('id', "taskDivContainer" + i);
+            document.getElementById("taskDivContainer" + i).querySelector('input[type=checkbox]').setAttribute('id', "checkBox" + i);
         }
     });
     firstRowDiv.appendChild(checkBox);

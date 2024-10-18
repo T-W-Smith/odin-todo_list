@@ -105,6 +105,7 @@ const project = function() {
         document.getElementById("projectsButton" + currentProject).textContent = newProject.getName();
         document.getElementById("currentProject").textContent = newProject.getName();
         document.getElementById("renameProjectDialog").close();
+        saveTodos(todoList);
     });
     
     document.getElementById('renameProjectCancelBtn').addEventListener('click', function() {
@@ -134,5 +135,9 @@ export function deleteProject(projectName) {
 
 export function deleteTask(taskIndex) {
     todoList.getTodoList()[currentProject].getTasks().splice(taskIndex, 1);
+    saveTodos(todoList);
+}
+
+export function save() {
     saveTodos(todoList);
 }
