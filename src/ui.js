@@ -1,8 +1,9 @@
-import { deleteProject } from "./index";
+import { deleteProject, deleteTask } from "./index";
 
 export function taskDom(newTask, currentProject) {
     const taskDiv = document.createElement('div');
     taskDiv.setAttribute('class', "taskDivContainer");
+    taskDiv.setAttribute('id', "taskDivContainer" + newTask.getIndex());
     const firstRowDiv = document.createElement('div');
     firstRowDiv.setAttribute('id', "firstRow");
     const checkBox = document.createElement('input');
@@ -32,7 +33,12 @@ export function taskDom(newTask, currentProject) {
     deleteTaskBtn.setAttribute('id', "deleteTaskBtn");
     deleteTaskBtn.textContent = "X";
     deleteTaskBtn.addEventListener('click', function() {
-        console.log("DELETE TASK");
+        taskDiv.remove();
+        deleteTask(newTask.getIndex());
+        let taskListChildren = document.getElementById(currentProject).children;
+        for(let i = 0; i < taskListChildren.length; i++) {
+            taskListChildren[i].setAttribute('id', "taskDivContainer" + i);
+        }
     });
     firstRowDiv.appendChild(checkBox);
     firstRowDiv.appendChild(taskName);
@@ -75,6 +81,14 @@ export function projectDom(newProject, currentProject) {
         projectBtnDiv.remove();
         projectDiv.remove();
         deleteProject(newProject.getName());
+        let projectChildDivs = document.getElementById('projectList').children;
+        let taskChildDivs = document.getElementById('taskList').children;
+        for(let i = 1; i < projectChildDivs.length; i++) {
+            taskChildDivs[i].setAttribute('id', i);
+            projectChildDivs[i].setAttribute('id', "projectBtnDiv" + i);
+            projectChildDivs[i].firstChild.setAttribute('id', "projectsButton" + i);
+            projectChildDivs[i].lastChild.setAttribute('id', "deleteProjectBtn" + i);
+        }
     });
     swapProjects(newProject, currentProject);
     projectButton.addEventListener('click', function(e) {
@@ -85,13 +99,13 @@ export function projectDom(newProject, currentProject) {
 function swapProjects(newProject, currentProject) {
     document.getElementById("currentProject").textContent = newProject.getName();
     if(document.getElementById("taskList").childElementCount > 1) {
-        let cDiv = document.getElementById('taskList').children;
-        let cDiv2 = document.getElementById('projectList').children;
-        for (let i = 0; i < cDiv.length; i++) {
-            cDiv[i].style.display = 'none';
+        let taskChildDivs = document.getElementById('taskList').children;
+        let projectChildDivs = document.getElementById('projectList').children;
+        for (let i = 0; i < taskChildDivs.length; i++) {
+            taskChildDivs[i].style.display = 'none';
             document.getElementById(currentProject).style.display = '';
-            cDiv2[i].style.backgroundColor = '';
-            cDiv2[i].style.fontWeight = '';
+            projectChildDivs[i].style.backgroundColor = '';
+            projectChildDivs[i].style.fontWeight = '';
             document.getElementById("projectBtnDiv" + currentProject).style.backgroundColor = '#707070';
             document.getElementById("projectBtnDiv" + currentProject).style.fontWeight = 'bold';
         }

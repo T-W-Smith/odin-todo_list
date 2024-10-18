@@ -8,13 +8,6 @@ import {saveTodos, loadTodos, isLocalStorageAvailable, clearLocalStorage} from '
 
 let currentProject = 0;
 let todoList = new Todos;
-  
-document.addEventListener('keydown', (event) => {
-if (event.key === 'Enter') {
-    // Execute code when the Enter key is pressed
-    console.log(todoList.getTodoList());
-    }
-});
 
 if (isLocalStorageAvailable()) {
     console.log("LOAD");
@@ -28,7 +21,7 @@ if (isLocalStorageAvailable()) {
             setUpGeneral();
         updateCurrentProject(newProject);
         for (let j = 0; j < storedTodoList[i].tasks.length; j++) {
-            const newTask = new Tasks(storedTodoList[i].tasks[j].name, storedTodoList[i].tasks[j].description, storedTodoList[i].tasks[j].dueDate, storedTodoList[i].tasks[j].checked);
+            const newTask = new Tasks(storedTodoList[i].tasks[j].name, storedTodoList[i].tasks[j].description, storedTodoList[i].tasks[j].dueDate, storedTodoList[i].tasks[j].checked, j);
             todoList.getTodoList()[i].setTasks(newTask);
             taskDom(newTask, i);
         }
@@ -59,7 +52,7 @@ const task = function() {
 
     document.getElementById('taskForm').addEventListener('submit', (e) => {
         e.preventDefault();
-        const newTask = new Tasks(document.getElementById("taskName").value, document.getElementById("taskDesc").value, document.getElementById("taskDueDate").value, false);
+        const newTask = new Tasks(document.getElementById("taskName").value, document.getElementById("taskDesc").value, document.getElementById("taskDueDate").value, false, document.getElementById(currentProject).childElementCount);
         todoList.getTodoList()[currentProject].setTasks(newTask);
         taskDom(newTask, currentProject);
         closeNewTask();
@@ -137,4 +130,9 @@ export function deleteProject(projectName) {
     saveTodos(todoList);
     if (currentProject === projectIndex)
         document.getElementById("projectsButton" + 0).click();
+}
+
+export function deleteTask(taskIndex) {
+    todoList.getTodoList()[currentProject].getTasks().splice(taskIndex, 1);
+    saveTodos(todoList);
 }
