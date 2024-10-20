@@ -7,16 +7,20 @@
 </head>
     <body>
         <div class="container">
+            <!-- Header -->
             <header class="header">
                 <div id="headerLogo">
                     <img src="images/check-all.svg">
                     <h1>Todo List</h1>
                 </div>
+                <!-- Reset Button -->
                 <div id="resetBtnDiv">
                     <input type="button" id="resetBtn" value="Reset Todo List" />
                 </div>
             </header>
+            <!-- Main -->
             <main class="main">
+                <!-- Sidebar/Project area -->
                 <div class="sideBar">
                     <h1 id="project">Projects: </h1>
                     <div id="projectList"></div>
@@ -24,6 +28,7 @@
                         <input type="button" id="projectBtn" value="+ New Project" />
                     </div>
                 </div>
+                <!-- Main area/task area -->
                 <div class="mainArea">
                     <h1 id="currentProject"></h1>
                     <p id="task">Tasks: </p>
@@ -33,12 +38,14 @@
                     </div>
                 </div>
             </main>
+            <!-- Footer -->
             <footer class="footer">
                 Copyright © <img src="images/github-mark.png" alt="GitHub logo">
                 <a href="https://github.com/T-W-Smith">Trey Smith 2024</a>
             </footer>
         </div>
 
+        <!-- Modal dialog popup for creating projects -->
         <div class="projectModal">
             <dialog id="projectDialog">
                 <form id="projectForm" method="dialog">
@@ -57,6 +64,7 @@
             </dialog>
         </div>
 
+        <!-- Modal dialog popup for renaming projects -->
         <div class="renameProjectModal">
             <dialog id="renameProjectDialog">
                 <form id="renameProjectForm" method="dialog">
@@ -75,6 +83,7 @@
             </dialog>
         </div>
 
+        <!-- Modal dialog popup for creating tasks -->
         <div class="taskModal">
             <dialog id="taskDialog">
                 <form id="taskForm" method="dialog">

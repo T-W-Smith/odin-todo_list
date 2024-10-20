@@ -1,3 +1,4 @@
+// Task Class
 export default class Tasks {
     constructor(name, description, dueDate, checked, index) {
         this.name = name;
@@ -7,6 +8,7 @@ export default class Tasks {
         this.index = index;
     }
 
+    // Set and Get the name of the task
     setName(name) {
         this.name = name;
     }
@@ -14,6 +16,7 @@ export default class Tasks {
         return this.name;
     }
 
+    // Set and Get the description of the task
     setDescription(description) {
         this.description = description;
     }
@@ -21,6 +24,7 @@ export default class Tasks {
         return this.description;
     }
 
+    // Set and Get the due date of the task
     setDueDate(dueDate) {
         this.dueDate = dueDate;
     }
@@ -28,6 +32,7 @@ export default class Tasks {
         return this.dueDate;
     }
 
+    // Set and Get the completion box(check box) of the task
     setChecked(checked) {
         this.checked = checked;
     }
@@ -35,6 +40,7 @@ export default class Tasks {
         return this.checked;
     }
 
+    // Set and Get the index of the task
     setIndex(index) {
         this.index = index;
     }
