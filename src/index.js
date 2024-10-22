@@ -95,7 +95,6 @@ const task = function() {
 
 // Creates a new project
 const project = function() {
-    let newProject;
     // New project button event listener opens the project creation
     // modal dialog popup
     const projectBtn = document.getElementById("projectBtn");
@@ -108,7 +107,7 @@ const project = function() {
     document.getElementById('projectForm').addEventListener('submit', (e) => {
         e.preventDefault();
         // New project made from task module
-        newProject = new Projects(document.getElementById("projectName").value);
+        const newProject = new Projects(document.getElementById("projectName").value);
         todoList.setTodoList(newProject);
         currentProject = todoList.getTodoList().length - 1;
         // Creates project from UI module
@@ -137,9 +136,9 @@ const project = function() {
     // modal dialog popup and saves it
     document.getElementById('renameProjectForm').addEventListener('submit', (e) => {
         e.preventDefault();
-        newProject.setName(document.getElementById("renameProjectName").value);
-        document.getElementById("projectsButton" + currentProject).textContent = newProject.getName();
-        document.getElementById("currentProject").textContent = newProject.getName();
+        todoList.getTodoList()[currentProject].setName(document.getElementById("renameProjectName").value);
+        document.getElementById("projectsButton" + currentProject).textContent = todoList.getTodoList()[currentProject].getName();
+        document.getElementById("currentProject").textContent = todoList.getTodoList()[currentProject].getName();
         document.getElementById("renameProjectDialog").close();
         saveTodos(todoList);
     });
